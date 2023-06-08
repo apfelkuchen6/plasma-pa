@@ -16,6 +16,10 @@ ListItemBase {
     draggable: devicesModel && devicesModel.count > 1
     label: {
         if (model.Client && model.Client.name && model.Client.name != "pipewire-media-session") {
+            var pattern = /^((playback|audio|alsa|pulse|pulseaudio|pipewire) ?)?(audio|playback|stream)?$/i;
+            if (model.Name && !pattern.test(model.Name)) {
+                return i18ndc("kcm_pulseaudio", "label of stream items", "%1: %2", model.Client.name, model.Name);
+            }
             return model.Client.name;
         }
         if (model.Name) {
